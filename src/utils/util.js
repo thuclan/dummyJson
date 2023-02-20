@@ -1,10 +1,6 @@
 const fs = require('fs/promises');
 const path = require('path');
-const {
-  REQUIRED_ENV_VARIABLES,
-  OPTIONAL_ENV_VARIABLES,
-  httpCodes,
-} = require('../constants');
+const { OPTIONAL_ENV_VARIABLES, httpCodes } = require('../constants');
 
 const utils = {};
 
@@ -122,16 +118,6 @@ utils.usernameRegex = /^[a-zA-Z0-9]*$/;
 utils.isNumber = num => !Number.isNaN(Number(num));
 
 utils.validateEnvVar = () => {
-  const requiredUnsetEnv = REQUIRED_ENV_VARIABLES.filter(
-    env => !(typeof process.env[env] !== 'undefined'),
-  );
-
-  if (requiredUnsetEnv.length) {
-    throw new Error(
-      `Required ENV variables are not set: [${requiredUnsetEnv.join(', ')}]`,
-    );
-  }
-
   const optionalUnsetEnv = OPTIONAL_ENV_VARIABLES.filter(
     env => !(typeof process.env[env] !== 'undefined'),
   );
